@@ -4,11 +4,14 @@ import os,requests
 OLLAMA = os.getenv("OLLAMA_ENDPOINT", "http://ollama:11434")
 app = Flask(__name__)
 
+@app.route("/")
+def index():
+    return "Hello from Flask + Ollama!"
 @app.route("/generate", methods=["POST"])
 def generate():
     data = request.get_json(force=True)
     prompt = data.get("prompt","Hello from Flask + Ollama!")
-    payload = {"model":"llama3.1", "prompt": prompt, "stream": False}
+    payload = {"model":"gemma3", "prompt": prompt, "stream": False}
     r = requests.post(f"{OLLAMA}/api/generate", json=payload, timeout=120)
     r.raise_for_status()
     return jsonify(r.json())
