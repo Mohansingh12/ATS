@@ -7,18 +7,11 @@ services:
     ports:
       - "5000:5000"
 
-  ollama:
-    image: ollama/ollama
-    container_name: ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-           - capabilities: ["gpu"]
+  llm:
+    provider:
+      type: model
+      options:
+        model: ai/gemma3
 
 volumes:
   ollama_data:
